@@ -1,4 +1,5 @@
 name: Build the flutter version of the RustDesk
+# 构建 RustDesk 的 Flutter 版本
 
 on:
   workflow_call:
@@ -9,6 +10,9 @@ on:
       upload-tag:
         type: string
         default: "nightly"
+# 工作流触发条件：可以被其他工作流调用，接受两个输入参数：
+# - upload-artifact：是否上传构建产物，默认为 true
+# - upload-tag：上传的标签名，默认为 "nightly"
 
 # NOTE: F-Droid builder script 'flutter/build_fdroid.sh' reads environment
 # variables from this workflow!

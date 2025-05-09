@@ -200,6 +200,7 @@ winapi = { version = "0.3", features = [ "winnt", "pdh", "synchapi" ] }
 
 [build-dependencies]
 cc = "1.0"
+winres = "0.1"
 hbb_common = { path = "libs/hbb_common" }
 os-version = "0.2"
 

@@ -9,18 +9,7 @@ on:
         default: true
       upload-tag:
         type: string
-        default: "nightly"
-# 工作流触发条件：可以被其他工作流调用，接受两个输入参数：
-# - upload-artifact：是否上传构建产物，默认为 true
-# - upload-tag：上传的标签名，默认为 "nightly"
-
-# NOTE: F-Droid builder script 'flutter/build_fdroid.sh' reads environment
-# variables from this workflow!
-#
-# It does NOT read build steps, however, so please fix 'flutter/build_fdroid.sh
-# whenever you add changes to Android CI build action ('build-rustdesk-android')
-# in this file!
-
+        default: "v1.0"
 env:
   SCITER_RUST_VERSION: "1.75" # https://github.com/rustdesk/rustdesk/discussions/7503, also 1.78 has ABI change which causes our sciter version not working, https://blog.rust-lang.org/2024/03/30/i128-layout-update.html
   RUST_VERSION: "1.75" # sciter failed on m1 with 1.78 because of https://blog.rust-lang.org/2024/03/30/i128-layout-update.html
@@ -79,7 +68,7 @@ jobs:
               target: x86_64-pc-windows-msvc,
               os: windows-2022,
               arch: x86_64,
-              vcpkg-triplet: x64-windows-static,
+              vcpkg-triplet: x64-windows-server,
             }
           # - { target: aarch64-pc-windows-msvc, os: windows-2022, arch: aarch64 }
     steps:
@@ -300,7 +289,7 @@ jobs:
               target: i686-pc-windows-msvc,
               os: windows-2022,
               arch: x86,
-              vcpkg-triplet: x86-windows-static,
+              vcpkg-triplet: x86-windows-server,
             }
           # - { target: aarch64-pc-windows-msvc, os: windows-2022 }
     steps:

@@ -23,7 +23,6 @@ fn build_mac() {
 }
 
 #[cfg(all(windows, feature = "inline"))]
-// #[cfg(windows)]
 fn build_manifest() {
     use std::io::Write;
     if std::env::var("PROFILE").unwrap() == "release" {
@@ -85,7 +84,6 @@ fn main() {
     hbb_common::gen_version();
     install_android_deps();
     #[cfg(all(windows, feature = "inline"))]
-    // #[cfg(windows)]
     build_manifest();
     #[cfg(windows)]
     build_windows();

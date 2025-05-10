@@ -1,5 +1,4 @@
 name: Build the flutter version of the RustDesk
-# 构建 RustDesk 的 Flutter 版本
 
 on:
   workflow_call:
@@ -9,7 +8,15 @@ on:
         default: true
       upload-tag:
         type: string
-        default: "v1.0"
+        default: "nightly"
+
+# NOTE: F-Droid builder script 'flutter/build_fdroid.sh' reads environment
+# variables from this workflow!
+#
+# It does NOT read build steps, however, so please fix 'flutter/build_fdroid.sh
+# whenever you add changes to Android CI build action ('build-rustdesk-android')
+# in this file!
+
 env:
   SCITER_RUST_VERSION: "1.75" # https://github.com/rustdesk/rustdesk/discussions/7503, also 1.78 has ABI change which causes our sciter version not working, https://blog.rust-lang.org/2024/03/30/i128-layout-update.html
   RUST_VERSION: "1.75" # sciter failed on m1 with 1.78 because of https://blog.rust-lang.org/2024/03/30/i128-layout-update.html
@@ -170,9 +177,9 @@ jobs:
 
           # Download printer driver files and extract them to ./rustdesk
           try {
-            Invoke-WebRequest -Uri https://github.com/FrecklyComb1728/rustdesk/releases/download/driver/rustdesk_printer_driver_v4.zip -OutFile rustdesk_printer_driver_v4.zip
-            Invoke-WebRequest -Uri https://github.com/FrecklyComb1728/rustdesk/releases/download/driver/printer_driver_adapter.zip -OutFile printer_driver_adapter.zip
-            Invoke-WebRequest -Uri https://github.com/FrecklyComb1728/rustdesk/releases/download/driver/sha256sums -OutFile sha256sums
+            Invoke-WebRequest -Uri https://github.com/rustdesk/hbb_common/releases/download/driver/rustdesk_printer_driver_v4.zip -OutFile rustdesk_printer_driver_v4.zip
+            Invoke-WebRequest -Uri https://github.com/rustdesk/hbb_common/releases/download/driver/printer_driver_adapter.zip -OutFile printer_driver_adapter.zip
+            Invoke-WebRequest -Uri https://github.com/rustdesk/hbb_common/releases/download/driver/sha256sums -OutFile sha256sums
 
             # Check and move the files
             $checksum_driver = (Select-String -Path .\sha256sums -Pattern '^([a-fA-F0-9]{64}) \*rustdesk_printer_driver_v4\.zip$').Matches.Groups[1].Value
